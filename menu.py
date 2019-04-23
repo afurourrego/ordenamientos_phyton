@@ -1,5 +1,5 @@
 import random
-
+from time import time
 
 
 
@@ -39,13 +39,18 @@ def menu():
             break
         except ValueError:
             print("\n\n¡Opción invalida!\n\n")
+    t0 = time()
 
     aleatorios = [random.randint(-99999,99999) for _ in range(num_cantidad)]
-    print(aleatorios[0])
+
+    t1 = time()
+
+    # print(aleatorios)
+    print ("Tiempo: {0:f} segundos".format(t1 - t0))
 
     while True:
         print("\n\n[METODOS DE ORDENAMIENTO EN PYTHON] \n")
-        print("1.[Insercion (insertion sort)]")
+        print("1.[Insercion (insertionsort)]")
         print("2.[Mezcla (merge)]")
         print("3.[montones (heap sort)]")
         print("4.[rapido (quicksort)]")
@@ -60,7 +65,17 @@ def menu():
             option = int(option)
             while switch(option):
                 if case(1):
+                    comparaciones = 0
 
+                    t0 = time()
+                    lista, comparaciones = insertionSort(aleatorios)
+                    t1 = time()
+
+                    print ("Lista ordenada:")
+                    # print (lista, "\n")
+
+                    print ("Tiempo: {0:f} segundos".format(t1 - t0))
+                    print ("Comparaciones:", comparaciones)
                     break
                 if case(2):
 
@@ -82,12 +97,22 @@ def menu():
             print("\n\n¡Opción invalida!\n\n")
 
 
+def insertionSort(lista):
+    n = len(lista)
+    global comparaciones
+    comparaciones = 0
 
+    for i in range(1, n):
+        val = lista[i]
+        j = i
 
+        while j > 0 and lista[j-1] > val:
+            lista[j] = lista[j-1]
+            j -= 1
+            comparaciones += 1
 
-
-
-
+        lista[j] = val
+    return lista, comparaciones
 
 #SWITCH
 class switch(object):
