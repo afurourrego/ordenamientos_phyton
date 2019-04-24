@@ -5,6 +5,7 @@ from time import time
 
 def menu():
     global comparaciones
+    comparaciones = 0
 
     print("[METODOS DE ORDENAMIENTO EN PYTHON] \n")
 
@@ -79,15 +80,27 @@ def menu():
 
                     break
                 if case(3):
+                    t0 = time()
+
+                    t1 = time()
 
                     break
                 if case(4):
+                    t0 = time()
+                    lista = quicksort(aleatorios, 0, len(aleatorios)-1)
+                    t1 = time()
 
                     break
                 if case(5):
+                    t0 = time()
+
+                    t1 = time()
 
                     break
                 if case(6):
+                    t0 = time()
+
+                    t1 = time()
 
                     break
             break
@@ -103,7 +116,6 @@ def menu():
 def insertionSort(lista):
     n = len(lista)
     global comparaciones
-    comparaciones = 0
 
     for i in range(1, n):
         val = lista[i]
@@ -133,7 +145,6 @@ def mergeSort(lista):
 
 def merge(listaA, listaB):
     global comparaciones
-    comparaciones = 0
 
     lista_nueva = []
     a = 0
@@ -159,10 +170,32 @@ def merge(listaA, listaB):
 
     return lista_nueva
 ################################################################################
-
+# montones
 ################################################################################
+def quicksort(lista, izq, der):
+    if izq < der:
+    	pivote_indice = particion(lista, izq, der)
+    	quicksort(lista, izq, pivote_indice-1)
+    	quicksort(lista, pivote_indice+1, der)
+    return lista
+
+def particion(lista, izq, der):
+    global comparaciones
+
+    pivote = lista[der]
+    indice = izq
 
 
+    for i in range(izq, der):
+        comparaciones += 1
+
+        if lista[i] <= pivote:
+            lista[indice], lista[i] = lista[i], lista[indice]
+            indice += 1
+
+    lista[indice], lista[der] = lista[der], lista[indice]
+    return indice
+################################################################################
 
 
 
