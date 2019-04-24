@@ -25,7 +25,7 @@ def menu():
             option = int(option)
             while switch(option):
                 if case(1):
-                    num_cantidad = 100
+                    num_cantidad = 10
                     break
                 if case(2):
                     num_cantidad = 2000000
@@ -81,7 +81,7 @@ def menu():
                     break
                 if case(3):
                     t0 = time()
-
+                    lista = heapsort(aleatorios, len(aleatorios))
                     t1 = time()
 
                     break
@@ -93,7 +93,7 @@ def menu():
                     break
                 if case(5):
                     t0 = time()
-
+                    lista = countingsort(aleatorios, 99999)
                     t1 = time()
 
                     break
@@ -170,7 +170,7 @@ def merge(listaA, listaB):
 
     return lista_nueva
 ################################################################################
-# montones
+
 ################################################################################
 def quicksort(lista, izq, der):
     if izq < der:
@@ -196,7 +196,27 @@ def particion(lista, izq, der):
     lista[indice], lista[der] = lista[der], lista[indice]
     return indice
 ################################################################################
+def countingsort(array1, max_val):
+    global comparaciones
+    m = max_val + 1
+    count = [0] * m
 
+    for a in array1:
+    # count occurences
+        count[a] += 1
+    i = 0
+    for a in range(m):
+        for c in range(count[a]):
+            array1[i] = a
+            i += 1
+            comparaciones += 1
+
+    return array1
+################################################################################
+
+################################################################################
+
+################################################################################
 
 
 
