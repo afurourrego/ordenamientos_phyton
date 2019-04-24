@@ -4,6 +4,8 @@ from time import time
 
 
 def menu():
+    global comparaciones
+
     print("[METODOS DE ORDENAMIENTO EN PYTHON] \n")
 
     while True:
@@ -22,7 +24,7 @@ def menu():
             option = int(option)
             while switch(option):
                 if case(1):
-                    num_cantidad = 1000000
+                    num_cantidad = 100
                     break
                 if case(2):
                     num_cantidad = 2000000
@@ -45,7 +47,7 @@ def menu():
 
     t1 = time()
 
-    # print(aleatorios)
+    print(aleatorios)
     print ("Tiempo: {0:f} segundos".format(t1 - t0))
 
     while True:
@@ -65,19 +67,15 @@ def menu():
             option = int(option)
             while switch(option):
                 if case(1):
-                    comparaciones = 0
-
                     t0 = time()
-                    lista, comparaciones = insertionSort(aleatorios)
+                    lista = insertionSort(aleatorios)
                     t1 = time()
 
-                    print ("Lista ordenada:")
-                    # print (lista, "\n")
-
-                    print ("Tiempo: {0:f} segundos".format(t1 - t0))
-                    print ("Comparaciones:", comparaciones)
                     break
                 if case(2):
+                    t0 = time()
+                    lista = mergeSort(aleatorios)
+                    t1 = time()
 
                     break
                 if case(3):
@@ -96,7 +94,12 @@ def menu():
         except ValueError:
             print("\n\n¡Opción invalida!\n\n")
 
+    print ("Lista ordenada:")
+    print (lista, "\n")
 
+    print ("Tiempo: {0:f} segundos".format(t1 - t0))
+    print ("Comparaciones:", comparaciones)
+################################################################################
 def insertionSort(lista):
     n = len(lista)
     global comparaciones
@@ -112,8 +115,59 @@ def insertionSort(lista):
             comparaciones += 1
 
         lista[j] = val
-    return lista, comparaciones
+    return lista
+################################################################################
+def mergeSort(lista):
 
+    if len(lista) <= 1:
+        return lista
+
+    medio = len(lista) // 2
+    izquierda = lista[:medio]
+    derecha = lista[medio:]
+
+    izquierda = mergeSort(izquierda)
+    derecha = mergeSort(derecha)
+
+    return merge(izquierda, derecha)
+
+def merge(listaA, listaB):
+    global comparaciones
+    comparaciones = 0
+
+    lista_nueva = []
+    a = 0
+    b = 0
+
+    while a < len(listaA) and b < len(listaB):
+        comparaciones += 1
+
+        if listaA[a] < listaB[b]:
+            lista_nueva.append(listaA[a])
+            a += 1
+        else:
+            lista_nueva.append(listaB[b])
+            b += 1
+
+    while a < len(listaA):
+        lista_nueva.append(listaA[a])
+        a += 1
+
+    while b < len(listaB):
+        lista_nueva.append(listaB[b])
+        b += 1
+
+    return lista_nueva
+################################################################################
+
+################################################################################
+
+
+
+
+
+
+################################################################################
 #SWITCH
 class switch(object):
     value = None
