@@ -1,5 +1,6 @@
 import random
 from time import time
+import math
 
 
 
@@ -25,7 +26,7 @@ def menu():
             option = int(option)
             while switch(option):
                 if case(1):
-                    num_cantidad = 10
+                    num_cantidad = 50
                     break
                 if case(2):
                     num_cantidad = 2000000
@@ -81,7 +82,7 @@ def menu():
                     break
                 if case(3):
                     t0 = time()
-                    lista = heapsort(aleatorios, len(aleatorios))
+                    lista = heapsort(aleatorios)
                     t1 = time()
 
                     break
@@ -99,7 +100,7 @@ def menu():
                     break
                 if case(6):
                     t0 = time()
-
+                    lista = radixsort(aleatorios)
                     t1 = time()
 
                     break
@@ -170,7 +171,26 @@ def merge(listaA, listaB):
 
     return lista_nueva
 ################################################################################
-
+def heapsort(A):
+    def sift_down(A, parent, upto):
+        larger = 2 * parent + 1
+        while larger < upto:
+            if A[larger] < A[larger + 1]:
+                larger += 1
+            if A[larger] > A[parent]:
+                A[larger], A[parent] = A[parent], A[larger]
+                parent = larger
+                larger = 2 * parent + 1
+            else:
+                break
+    last_node = len(A) - 1
+    last_parent = last_node // 2
+    [ sift_down(A, i, last_node) for i in range(last_parent, -1, -1) ]
+    for i in range(last_node, 0, -1):
+        if A[0] > A[i]:
+            A[0], A[i] = A[i], A[0]
+            sift_down(A, 0, i - 1)
+    return A
 ################################################################################
 def quicksort(lista, izq, der):
     if izq < der:
@@ -198,7 +218,7 @@ def particion(lista, izq, der):
 ################################################################################
 def countingsort(array1, max_val):
     global comparaciones
-    m = max_val + 1
+    m = max_val
     count = [0] * m
 
     for a in array1:
