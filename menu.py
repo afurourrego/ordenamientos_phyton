@@ -1,6 +1,6 @@
 import random
 from time import time
-import math
+# import math
 
 
 
@@ -26,7 +26,7 @@ def menu():
             option = int(option)
             while switch(option):
                 if case(1):
-                    num_cantidad = 50
+                    num_cantidad = 1000000
                     break
                 if case(2):
                     num_cantidad = 2000000
@@ -49,8 +49,8 @@ def menu():
 
     t1 = time()
 
-    print(aleatorios)
-    print ("Tiempo: {0:f} segundos".format(t1 - t0))
+    # print(aleatorios)
+    # print ("Tiempo: {0:f} segundos".format(t1 - t0))
 
     while True:
         print("\n\n[METODOS DE ORDENAMIENTO EN PYTHON] \n")
@@ -109,7 +109,7 @@ def menu():
             print("\n\n¡Opción invalida!\n\n")
 
     print ("Lista ordenada:")
-    print (lista, "\n")
+    # print (lista, "\n")
 
     print ("Tiempo: {0:f} segundos".format(t1 - t0))
     print ("Comparaciones:", comparaciones)
@@ -233,9 +233,37 @@ def countingsort(array1, max_val):
 
     return array1
 ################################################################################
+def radixsort(alist, base=10):
+    if alist == []:
+        return
 
-################################################################################
+    def key_factory(digit, base):
+        def key(alist, index):
+            return ((alist[index]//(base**digit)) % base)
+        return key
+    largest = max(alist)
+    exp = 0
+    while base**exp <= largest:
+        alist = counting_sort(alist, base - 1, key_factory(exp, base))
+        exp = exp + 1
+    return alist
 
+def counting_sort(alist, largest, key):
+    c = [0]*(largest + 1)
+    for i in range(len(alist)):
+        c[key(alist, i)] = c[key(alist, i)] + 1
+
+    # Find the last index for each element
+    c[0] = c[0] - 1 # to decrement each element for zero-based indexing
+    for i in range(1, largest + 1):
+        c[i] = c[i] + c[i - 1]
+
+    result = [None]*len(alist)
+    for i in range(len(alist) - 1, -1, -1):
+        result[c[key(alist, i)]] = alist[i]
+        c[key(alist, i)] = c[key(alist, i)] - 1
+
+    return result
 ################################################################################
 
 
