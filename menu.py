@@ -70,36 +70,42 @@ def menu():
             while switch(option):
                 if case(1):
                     t0 = time()
+                    t2 = time()
                     lista = insertionSort(aleatorios)
                     t1 = time()
 
                     break
                 if case(2):
                     t0 = time()
+                    t2 = time()
                     lista = mergeSort(aleatorios)
                     t1 = time()
 
                     break
                 if case(3):
                     t0 = time()
+                    t2 = time()
                     lista = heapsort(aleatorios)
                     t1 = time()
 
                     break
                 if case(4):
                     t0 = time()
+                    t2 = time()
                     lista = quicksort(aleatorios, 0, len(aleatorios)-1)
                     t1 = time()
 
                     break
                 if case(5):
                     t0 = time()
+                    t2 = time()
                     lista = countingsort(aleatorios, 99999)
                     t1 = time()
 
                     break
                 if case(6):
                     t0 = time()
+                    t2 = time()
                     lista = radixsort(aleatorios)
                     t1 = time()
 
@@ -109,9 +115,12 @@ def menu():
             print("\n\n¡Opción invalida!\n\n")
 
     print ("Lista ordenada:")
-    # print (lista, "\n")
+    print (lista, "\n")
+    t3 = time()
 
     print ("Tiempo: {0:f} segundos".format(t1 - t0))
+    print ("Tiempo: {0:f} segundos".format(t3 - t2))
+
     print ("Comparaciones:", comparaciones)
 ################################################################################
 def insertionSort(lista):
