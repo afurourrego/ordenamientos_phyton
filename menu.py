@@ -241,54 +241,34 @@ def countingsort(unsorted):
       count_array[k-low] -= 1             # and here
    return result
 ################################################################################
-# def countingsort(arr, exp1):
-#
-#     n = len(arr)
-#
-#     # The output array elements that will have sorted arr
-#     output = [0] * (n)
-#
-#     # initialize count array as 0
-#     count = [0] * (10)
-#
-#     # Store count of occurrences in count[]
-#     for i in range(0, n):
-#         index = (arr[i]/exp1)
-#         count[ (index)%10 ] += 1
-#
-#     # Change count[i] so that count[i] now contains actual
-#     #  position of this digit in output array
-#     for i in range(1,10):
-#         count[i] += count[i-1]
-#
-#     # Build the output array
-#     i = n-1
-#     while i>=0:
-#         index = (arr[i]/exp1)
-#         output[ count[ (index)%10 ] - 1] = arr[i]
-#         count[ (index)%10 ] -= 1
-#         i -= 1
-#
-#     # Copying the output array to arr[],
-#     # so that arr now contains sorted numbers
-#     i = 0
-#     for i in range(0,len(arr)):
-#         arr[i] = output[i]
-#
-# # Method to do Radix Sort
-# def radixsort(arr):
-#
-#     # Find the maximum number to know number of digits
-#     max1 = max(arr)
-#
-#     # Do counting sort for every digit. Note that instead
-#     # of passing digit number, exp is passed. exp is 10^i
-#     # where i is current digit number
-#     exp = 1
-#     while max1/exp > 0:
-#         countingsort(arr,exp)
-#         exp *= 10
+def radix_sort_nonneg(lst):
+    RADIX = 10
+    last_iteration = False
+    radix_power = 1
+    while not last_iteration:
+        # split into buckets
+        buckets = [[] for _ in range(RADIX)]
+        last_iteration = True  # unless we find it isn't
+        for el in lst:
+            # find the digit corresponding to radix_power
+            #  example with radix_power = 1000; el = 123456
+            #  el % (radix_power*RADIX) == 123456 % 10000 == 3456
+            #  3456 // radix_power == 3456 // 1000 == 3
+            digit = el % (radix_power*RADIX) // radix_power
+            buckets[digit].append(el)
+            if el >= radix_power*RADIX:
+                last_iteration = False
 
+        # flatten
+        lst = [el for bucket in buckets for el in bucket]
+        radix_power *= RADIX
+    return lst
+
+
+def radixsort(lst):
+    positive_ints = radix_sort_nonneg( x for x in lst if x >= 0)
+    negative_ints = radix_sort_nonneg(-x for x in lst if x <  0)
+    return [-x for x in reversed(negative_ints)] + positive_ints
 ################################################################################
 
 
