@@ -99,7 +99,7 @@ def menu():
                 if case(5):
                     t0 = time()
                     t2 = time()
-                    lista = countingsort(aleatorios, num_cantidad)
+                    lista = countingsort(aleatorios, 99999)
                     t1 = time()
 
                     break
@@ -227,54 +227,67 @@ def particion(lista, izq, der):
     lista[indice], lista[der] = lista[der], lista[indice]
     return indice
 ################################################################################
-def countingsort(array1, max_val):
-    global comparaciones
-    m = max_val
-    count = [0] * m
-
-    for a in array1:
-    # count occurences
-        count[a] += 1
+def countingsort(array, maxval):
+    n = len(array)
+    m = maxval + 1
+    count = [0] * m               # init with zeros
+    for a in array:
+        count[a] += 1             # count occurences
     i = 0
-    for a in range(m):
-        for c in range(count[a]):
-            array1[i] = a
+    for a in range(m):            # emit
+        for c in range(count[a]): # - emit 'count[a]' copies of 'a'
+            array[i] = a
             i += 1
-            comparaciones += 1
-
-    return array1
+    return array
 ################################################################################
-def radixsort(alist, base=10):
-    if alist == []:
-        return
+# def countingsort(arr, exp1):
+#
+#     n = len(arr)
+#
+#     # The output array elements that will have sorted arr
+#     output = [0] * (n)
+#
+#     # initialize count array as 0
+#     count = [0] * (10)
+#
+#     # Store count of occurrences in count[]
+#     for i in range(0, n):
+#         index = (arr[i]/exp1)
+#         count[ (index)%10 ] += 1
+#
+#     # Change count[i] so that count[i] now contains actual
+#     #  position of this digit in output array
+#     for i in range(1,10):
+#         count[i] += count[i-1]
+#
+#     # Build the output array
+#     i = n-1
+#     while i>=0:
+#         index = (arr[i]/exp1)
+#         output[ count[ (index)%10 ] - 1] = arr[i]
+#         count[ (index)%10 ] -= 1
+#         i -= 1
+#
+#     # Copying the output array to arr[],
+#     # so that arr now contains sorted numbers
+#     i = 0
+#     for i in range(0,len(arr)):
+#         arr[i] = output[i]
+#
+# # Method to do Radix Sort
+# def radixsort(arr):
+#
+#     # Find the maximum number to know number of digits
+#     max1 = max(arr)
+#
+#     # Do counting sort for every digit. Note that instead
+#     # of passing digit number, exp is passed. exp is 10^i
+#     # where i is current digit number
+#     exp = 1
+#     while max1/exp > 0:
+#         countingsort(arr,exp)
+#         exp *= 10
 
-    def key_factory(digit, base):
-        def key(alist, index):
-            return ((alist[index]//(base**digit)) % base)
-        return key
-    largest = max(alist)
-    exp = 0
-    while base**exp <= largest:
-        alist = counting_sort(alist, base - 1, key_factory(exp, base))
-        exp = exp + 1
-    return alist
-
-def counting_sort(alist, largest, key):
-    c = [0]*(largest + 1)
-    for i in range(len(alist)):
-        c[key(alist, i)] = c[key(alist, i)] + 1
-
-    # Find the last index for each element
-    c[0] = c[0] - 1 # to decrement each element for zero-based indexing
-    for i in range(1, largest + 1):
-        c[i] = c[i] + c[i - 1]
-
-    result = [None]*len(alist)
-    for i in range(len(alist) - 1, -1, -1):
-        result[c[key(alist, i)]] = alist[i]
-        c[key(alist, i)] = c[key(alist, i)] - 1
-
-    return result
 ################################################################################
 
 
