@@ -181,6 +181,7 @@ def merge(listaA, listaB):
     return lista_nueva
 ################################################################################
 def heapsort(A):
+    global comparaciones
     def sift_down(A, parent, upto):
         larger = 2 * parent + 1
         while larger < upto:
@@ -196,6 +197,7 @@ def heapsort(A):
     last_parent = last_node // 2
     [ sift_down(A, i, last_node) for i in range(last_parent, -1, -1) ]
     for i in range(last_node, 0, -1):
+        comparaciones += 1
         if A[0] > A[i]:
             A[0], A[i] = A[i], A[0]
             sift_down(A, 0, i - 1)
