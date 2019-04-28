@@ -1,4 +1,5 @@
-import random
+import random, threading
+import numpy as np
 from time import time
 # import math
 
@@ -49,6 +50,7 @@ def menu():
 
     t1 = time()
 
+    num_hilos = num_cantidad // 1000
     # print(aleatorios)
     # print ("Tiempo: {0:f} segundos".format(t1 - t0))
 
@@ -60,10 +62,16 @@ def menu():
         print("4.[rapido (quicksort)]")
         print("5.[conteo (couting sort)]")
         print("6.[radix sort]")
+        print("7.[Insercion (insertionsort)] THREADS")
+        print("8.[Mezcla (merge)] THREADS")
+        print("9.[montones (heap sort)] THREADS")
+        print("10.[rapido (quicksort)] THREADS")
+        print("11.[conteo (couting sort)] THREADS")
+        print("12.[radix sort] THREADS")
         try:
             option = input("\nElige tu opción: ")
 
-            if int(option) > 6:
+            if int(option) > 12:
                 option = 'num'
 
             option = int(option)
@@ -110,6 +118,114 @@ def menu():
                     t1 = time()
 
                     break
+                if case(7):
+                    t0 = time()
+                    t2 = time()
+                    lista = np.array_split(aleatorios,num_hilos)
+
+                    for i in range(0, num_hilos):
+                        hilo = threading.Thread(target=insertionSort, args=(lista[i],))
+                        hilo.setDaemon = True
+                        hilo.start()
+
+                    for i in range(0, num_hilos):
+                        hilo.join()
+
+                    lista = np.concatenate(lista)
+                    lista = insertionSort(lista)
+                    t1 = time()
+
+                    break
+                if case(8):
+                    t0 = time()
+                    t2 = time()
+                    lista = np.array_split(aleatorios,num_hilos)
+
+                    for i in range(0, num_hilos):
+                        hilo = threading.Thread(target=mergeSort, args=(lista[i],))
+                        hilo.setDaemon = True
+                        hilo.start()
+
+                    for i in range(0, num_hilos):
+                        hilo.join()
+
+                    lista = np.concatenate(lista)
+                    lista = mergeSort(lista)
+                    t1 = time()
+
+                    break
+                # if case(9):
+                #     t0 = time()
+                #     t2 = time()
+                #     lista = np.array_split(aleatorios,num_hilos)
+                #
+                #     for i in range(0, num_hilos):
+                #         hilo = threading.Thread(target=insertionSort, args=(lista[i],))
+                #         hilo.setDaemon = True
+                #         hilo.start()
+                #
+                #     for i in range(0, num_hilos):
+                #         hilo.join()
+                #
+                #     lista = np.concatenate(lista)
+                #     lista = insertionSort(lista)
+                #     t1 = time()
+                #
+                #     break
+                # if case(10):
+                #     t0 = time()
+                #     t2 = time()
+                #     lista = np.array_split(aleatorios,num_hilos)
+                #
+                #     for i in range(0, num_hilos):
+                #         hilo = threading.Thread(target=insertionSort, args=(lista[i],))
+                #         hilo.setDaemon = True
+                #         hilo.start()
+                #
+                #     for i in range(0, num_hilos):
+                #         hilo.join()
+                #
+                #     lista = np.concatenate(lista)
+                #     lista = insertionSort(lista)
+                #     t1 = time()
+                #
+                #     break
+                # if case(11):
+                #     t0 = time()
+                #     t2 = time()
+                #     lista = np.array_split(aleatorios,num_hilos)
+                #
+                #     for i in range(0, num_hilos):
+                #         hilo = threading.Thread(target=insertionSort, args=(lista[i],))
+                #         hilo.setDaemon = True
+                #         hilo.start()
+                #
+                #     for i in range(0, num_hilos):
+                #         hilo.join()
+                #
+                #     lista = np.concatenate(lista)
+                #     lista = insertionSort(lista)
+                #     t1 = time()
+                #
+                #     break
+                # if case(12):
+                #     t0 = time()
+                #     t2 = time()
+                #     lista = np.array_split(aleatorios,num_hilos)
+                #
+                #     for i in range(0, num_hilos):
+                #         hilo = threading.Thread(target=insertionSort, args=(lista[i],))
+                #         hilo.setDaemon = True
+                #         hilo.start()
+                #
+                #     for i in range(0, num_hilos):
+                #         hilo.join()
+                #
+                #     lista = np.concatenate(lista)
+                #     lista = insertionSort(lista)
+                #     t1 = time()
+                #
+                #     break
             break
         except ValueError:
             print("\n\n¡Opción invalida!\n\n")
