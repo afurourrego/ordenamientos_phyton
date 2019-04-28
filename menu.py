@@ -5,7 +5,7 @@ from time import time
 
 
 def menu():
-    global comparaciones
+    global comparaciones, num_cantidad
     comparaciones = 0
 
     print("[METODOS DE ORDENAMIENTO EN PYTHON] \n")
@@ -99,7 +99,7 @@ def menu():
                 if case(5):
                     t0 = time()
                     t2 = time()
-                    lista = countingsort(aleatorios, 99999)
+                    lista = countingsort(aleatorios, num_cantidad)
                     t1 = time()
 
                     break
