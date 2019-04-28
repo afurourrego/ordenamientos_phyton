@@ -99,7 +99,7 @@ def menu():
                 if case(5):
                     t0 = time()
                     t2 = time()
-                    lista = countingsort(aleatorios, 99999)
+                    lista = countingsort(aleatorios)
                     t1 = time()
 
                     break
@@ -227,18 +227,19 @@ def particion(lista, izq, der):
     lista[indice], lista[der] = lista[der], lista[indice]
     return indice
 ################################################################################
-def countingsort(array, maxval):
-    n = len(array)
-    m = maxval + 1
-    count = [0] * m               # init with zeros
-    for a in array:
-        count[a] += 1             # count occurences
-    i = 0
-    for a in range(m):            # emit
-        for c in range(count[a]): # - emit 'count[a]' copies of 'a'
-            array[i] = a
-            i += 1
-    return array
+def countingsort(unsorted):
+   result = [0] * len(unsorted)
+   low = min(unsorted)      # we don't care if this is positive or negative any more!
+   high = max(unsorted)
+   count_array = [0 for i in range(low, high+1)]
+   for i in unsorted:
+      count_array[i-low] += 1             # use an offset index
+   for j in range(1, len(count_array)):
+      count_array[j] += count_array[j-1]
+   for k in reversed(unsorted):
+      result[count_array[k-low] - 1] = k  # here too
+      count_array[k-low] -= 1             # and here
+   return result
 ################################################################################
 # def countingsort(arr, exp1):
 #
