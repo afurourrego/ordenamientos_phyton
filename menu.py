@@ -173,60 +173,60 @@ def menu():
                     t1 = time()
 
                     break
-                # if case(10):
-                #     t0 = time()
-                #     t2 = time()
-                #     lista = np.array_split(aleatorios,num_hilos)
-                #
-                #     for i in range(0, num_hilos):
-                #         hilo = threading.Thread(target=insertionSort, args=(lista[i],))
-                #         hilo.setDaemon = True
-                #         hilo.start()
-                #
-                #     for i in range(0, num_hilos):
-                #         hilo.join()
-                #
-                #     lista = np.concatenate(lista)
-                #     lista = insertionSort(lista)
-                #     t1 = time()
-                #
-                #     break
-                # if case(11):
-                #     t0 = time()
-                #     t2 = time()
-                #     lista = np.array_split(aleatorios,num_hilos)
-                #
-                #     for i in range(0, num_hilos):
-                #         hilo = threading.Thread(target=insertionSort, args=(lista[i],))
-                #         hilo.setDaemon = True
-                #         hilo.start()
-                #
-                #     for i in range(0, num_hilos):
-                #         hilo.join()
-                #
-                #     lista = np.concatenate(lista)
-                #     lista = insertionSort(lista)
-                #     t1 = time()
-                #
-                #     break
-                # if case(12):
-                #     t0 = time()
-                #     t2 = time()
-                #     lista = np.array_split(aleatorios,num_hilos)
-                #
-                #     for i in range(0, num_hilos):
-                #         hilo = threading.Thread(target=insertionSort, args=(lista[i],))
-                #         hilo.setDaemon = True
-                #         hilo.start()
-                #
-                #     for i in range(0, num_hilos):
-                #         hilo.join()
-                #
-                #     lista = np.concatenate(lista)
-                #     lista = insertionSort(lista)
-                #     t1 = time()
-                #
-                #     break
+                if case(10):
+                    t0 = time()
+                    t2 = time()
+                    lista = np.array_split(aleatorios,num_hilos)
+
+                    for i in range(0, num_hilos):
+                        hilo = threading.Thread(target=quicksort, args=(lista[i],0 , len(lista[i])-1))
+                        hilo.setDaemon = True
+                        hilo.start()
+
+                    for i in range(0, num_hilos):
+                        hilo.join()
+
+                    lista = np.concatenate(lista)
+                    lista = quicksort(lista, 0, len(lista)-1)
+                    t1 = time()
+
+                    break
+                if case(11):
+                    t0 = time()
+                    t2 = time()
+                    lista = np.array_split(aleatorios,num_hilos)
+
+                    for i in range(0, num_hilos):
+                        hilo = threading.Thread(target=countingsort, args=(lista[i],))
+                        hilo.setDaemon = True
+                        hilo.start()
+
+                    for i in range(0, num_hilos):
+                        hilo.join()
+
+                    lista = np.concatenate(lista)
+                    lista = countingsort(lista)
+                    t1 = time()
+
+                    break
+                if case(12):
+                    t0 = time()
+                    t2 = time()
+                    lista = np.array_split(aleatorios,num_hilos)
+
+                    for i in range(0, num_hilos):
+                        hilo = threading.Thread(target=radixsort, args=(lista[i],))
+                        hilo.setDaemon = True
+                        hilo.start()
+
+                    for i in range(0, num_hilos):
+                        hilo.join()
+
+                    lista = np.concatenate(lista)
+                    lista = radixsort(lista)
+                    t1 = time()
+
+                    break
             break
         except ValueError:
             print("\n\n¡Opción invalida!\n\n")
@@ -363,20 +363,14 @@ def radix_sort_nonneg(lst):
     last_iteration = False
     radix_power = 1
     while not last_iteration:
-        # split into buckets
         buckets = [[] for _ in range(RADIX)]
-        last_iteration = True  # unless we find it isn't
+        last_iteration = True 
         for el in lst:
-            # find the digit corresponding to radix_power
-            #  example with radix_power = 1000; el = 123456
-            #  el % (radix_power*RADIX) == 123456 % 10000 == 3456
-            #  3456 // radix_power == 3456 // 1000 == 3
             digit = el % (radix_power*RADIX) // radix_power
             buckets[digit].append(el)
             if el >= radix_power*RADIX:
                 last_iteration = False
 
-        # flatten
         lst = [el for bucket in buckets for el in bucket]
         radix_power *= RADIX
     return lst
