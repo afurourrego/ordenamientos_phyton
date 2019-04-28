@@ -61,13 +61,14 @@ def menu():
         print("3.[montones (heap sort)]")
         print("4.[rapido (quicksort)]")
         print("5.[conteo (couting sort)]")
-        print("6.[radix sort]")
-        print("7.[Insercion (insertionsort)] THREADS")
-        print("8.[Mezcla (merge)] THREADS")
-        print("9.[montones (heap sort)] THREADS")
-        print("10.[rapido (quicksort)] THREADS")
-        print("11.[conteo (couting sort)] THREADS")
-        print("12.[radix sort] THREADS")
+        print("6.[radix sort]\n\n")
+        print("[THREADS]")
+        print("7.[Insercion (insertionsort)]")
+        print("8.[Mezcla (merge)]")
+        print("9.[montones (heap sort)]")
+        print("10.[rapido (quicksort)]")
+        print("11.[conteo (couting sort)]")
+        print("12.[radix sort]")
         try:
             option = input("\nElige tu opción: ")
 
@@ -154,24 +155,24 @@ def menu():
                     t1 = time()
 
                     break
-                # if case(9):
-                #     t0 = time()
-                #     t2 = time()
-                #     lista = np.array_split(aleatorios,num_hilos)
-                #
-                #     for i in range(0, num_hilos):
-                #         hilo = threading.Thread(target=insertionSort, args=(lista[i],))
-                #         hilo.setDaemon = True
-                #         hilo.start()
-                #
-                #     for i in range(0, num_hilos):
-                #         hilo.join()
-                #
-                #     lista = np.concatenate(lista)
-                #     lista = insertionSort(lista)
-                #     t1 = time()
-                #
-                #     break
+                if case(9):
+                    t0 = time()
+                    t2 = time()
+                    lista = np.array_split(aleatorios,num_hilos)
+
+                    for i in range(0, num_hilos):
+                        hilo = threading.Thread(target=heapsort, args=(lista[i],))
+                        hilo.setDaemon = True
+                        hilo.start()
+
+                    for i in range(0, num_hilos):
+                        hilo.join()
+
+                    lista = np.concatenate(lista)
+                    lista = heapsort(aleatorios)
+                    t1 = time()
+
+                    break
                 # if case(10):
                 #     t0 = time()
                 #     t2 = time()
